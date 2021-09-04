@@ -1,3 +1,0 @@
-C:/Users/meeve/CLionProjects/infa_sem3_2021/cmake-build-debug/CMakeFiles/infa_sem3_2021.dir
-C:/Users/meeve/CLionProjects/infa_sem3_2021/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/meeve/CLionProjects/infa_sem3_2021/cmake-build-debug/CMakeFiles/rebuild_cache.dir
