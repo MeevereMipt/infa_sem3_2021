@@ -52,7 +52,7 @@ namespace containers::stack {
         if (top == nullptr)
             throw std::underflow_error("pop with nullptr");
 
-        int out;
+        T out;
         StackNode<T>* prev_top = top;
 
         out = top->data;

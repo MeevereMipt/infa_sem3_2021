@@ -11,6 +11,9 @@
 using containers::deque::Deque;
 using containers::deque::DequeNode;
 
+using std::ostream;
+using std::istream;
+
 namespace containers::list {
 
     template <typename T>

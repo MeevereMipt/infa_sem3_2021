@@ -8,12 +8,13 @@
 #include "containers/list.h"
 #include "containers/stack.h"
 
-namespace containers::set {
-    using std::ostream;
-    using std::istream;
+using std::ostream;
+using std::istream;
 
-    using containers::list::List;
-    using containers::stack::Stack;
+using containers::list::List;
+using containers::stack::Stack;
+
+namespace containers::set {
 
     template <typename T>
     struct Node {
@@ -22,11 +23,10 @@ namespace containers::set {
         Node* right;
 
         Node() {left = right = nullptr;}
-        explicit Node(const T& data) : Node(), data(data) {}
+        explicit Node(const T& data) : data(data) {left = right = nullptr;}
 
         ~Node() {
             delete left; delete right;
-            delete data;
         }
 
         bool connect(const Node& node) {
@@ -44,11 +44,12 @@ namespace containers::set {
         }
 
 
-
-        ostream& operator<<(ostream& out, Node<T> node){
-            return out << node;
-        }
     };
+
+    template<typename T>
+    ostream& operator<<(ostream& out, Node<T> node){
+        return out << node.data;
+    }
 
     template <typename T>
     class Set {
@@ -70,8 +71,19 @@ namespace containers::set {
 
     public:
         Set() = default;
-        explicit Set(const T& data) : Set(), size(1) {
-            head = new Node<T>(data);
+        explicit Set(const T& data)
+            : size(1), head(new Node<T>(data)) {}
+
+        friend ostream& operator<<(ostream& out, Set& set){
+            Stack<Node<T>*> stack;
+            stack.push(set.head);
+            while(!stack.is_empty()){
+                auto cur_node = stack.pop();
+                out << *cur_node << " ";
+                if (cur_node->left  != nullptr) stack.push(cur_node->left);
+                if (cur_node->right != nullptr) stack.push(cur_node->right);
+            }
+            return out;
         }
 
         bool insert(const T& data) {
@@ -83,14 +95,14 @@ namespace containers::set {
             return _find(data) != nullptr;
         }
 
+
+
         List<T> to_list(){
             Stack<Node<T>*> stack;
             stack.push(head);
 
 
         }
-
-
 
 
         bool remove(const T& data) {
