@@ -3,6 +3,10 @@ project(infa_sem3_2021)
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(APP_USABLES usables/)
+
+include_directories(${APP_USABLES})
+
 set(USABLES_FILES
         usables/containers/stack.h
         usables/containers/deque.h
@@ -12,7 +16,7 @@ set(USABLES_FILES
         usables/graph.h
         usables/graph.cpp
         usables/containers/cyclic_array.h
-        usables/containers/list.h)
+        usables/containers/list.h usables/containers/set.h)
 
 add_executable(infa_sem3_2021
 
