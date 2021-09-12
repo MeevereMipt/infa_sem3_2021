@@ -95,13 +95,17 @@ namespace containers::set {
             return _find(data) != nullptr;
         }
 
-
-
         List<T> to_list(){
+            List<T> list;
             Stack<Node<T>*> stack;
             stack.push(head);
-
-
+            while(!stack.is_empty()){
+                auto cur_node = stack.pop();
+                list.push_bottom(cur_node->data);
+                if (cur_node->left  != nullptr) stack.push(cur_node->left);
+                if (cur_node->right != nullptr) stack.push(cur_node->right);
+            }
+            return list;
         }
 
 
