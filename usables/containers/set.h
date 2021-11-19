@@ -29,20 +29,39 @@ namespace containers::set {
             delete left; delete right;
         }
 
-        bool connect(const Node& node) {
-            if( node.data == data) return false;
-            if( node.data < data ){
+        bool insert(Node* node) {
+            if( node->data == data) return false;
+            if( data < node->data ){
                 if(left != nullptr)
-                    return left->connect(node);
-                left = &node;
+                    return left->insert(node);
+                left = node;
             } else {
                 if(right != nullptr)
-                    return right->connect(node);
-                right = &node;
+                    return right->insert(node);
+                right = node;
             }
             return true;
         }
 
+        bool find(T _data) {
+            if(data == _data) return true;
+            if(left) if(left->find(_data)) return true;
+            if(right) if(right->find(_data)) return true;
+            return false;
+        }
+
+        void merge(Node* node) {
+            if(!node) return;
+
+            // firstly insert the leaves
+            merge(node->left);
+            node->left = nullptr;
+            merge(node->right);
+            node->right = nullptr;
+
+            // then insert the node itself
+            insert(node);
+        }
 
     };
 
@@ -72,7 +91,11 @@ namespace containers::set {
     public:
         Set() = default;
         explicit Set(const T& data)
-            : size(1), head(new Node<T>(data)) {}
+        : size(1), head(new Node<T>(data)) {}
+
+        ~Set() {
+            delete head;
+        }
 
         friend ostream& operator<<(ostream& out, Set& set){
             Stack<Node<T>*> stack;
@@ -88,7 +111,7 @@ namespace containers::set {
 
         bool insert(const T& data) {
             auto node = new Node<T>(data);
-            return head->connect(node);
+            return head->connect(*node);
         };
 
         bool find(const T& data) {
@@ -101,7 +124,7 @@ namespace containers::set {
             stack.push(head);
             while(!stack.is_empty()){
                 auto cur_node = stack.pop();
-                list.push_bottom(cur_node->data);
+                list.push_top(cur_node->data);
                 if (cur_node->left  != nullptr) stack.push(cur_node->left);
                 if (cur_node->right != nullptr) stack.push(cur_node->right);
             }
@@ -133,7 +156,6 @@ namespace containers::set {
         }
 
     };
-
 
 }
 

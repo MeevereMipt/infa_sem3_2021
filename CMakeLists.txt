@@ -16,10 +16,10 @@ set(USABLES_FILES
         usables/graph.h
         usables/graph.cpp
         usables/containers/cyclic_array.h
-        usables/containers/list.h usables/containers/set.h)
+        usables/containers/list.h usables/containers/set.h control/taskD.cpp control/taskD.h control/taskC.cpp control/taskC.h control/taskB.cpp control/taskB.h)
 
 add_executable(infa_sem3_2021
 
         ${USABLES_FILES}
 
-        main.cpp)
+        main.cpp control/taskE.cpp control/taskE.h control/taskA.cpp control/taskA.h)

@@ -64,6 +64,7 @@ namespace containers::list {
             for( auto iter = other.cbegin(); iter != other.cend(); ++iter){
                 this->push_top(*iter);
             }
+            return *this;
         }
 
         bool find( T data ){
@@ -96,9 +97,32 @@ namespace containers::list {
     };
 
     template<typename T>
+    ostream & operator << (ostream &out, const List<T> &&ls);
+    template<typename T>
+    istream & operator >> (istream &in, List<T> &&ls);
+
+    template<typename T>
     ostream & operator << (ostream &out, const List<T> &ls);
     template<typename T>
     istream & operator >> (istream &in, List<T> &ls);
+
+    template <typename T>
+    ostream & operator << (ostream &out, List<T> &&ls) {
+        out << "| ";
+        for( auto elem : ls ){
+            out << elem << ' ';
+        }
+        out << '|';
+        return out;
+    }
+
+    template <typename T>
+    istream & operator >> (istream &in, List<T> &&ls) {
+        T elem;
+        in >> elem;
+        elem >> ls;
+        return in;
+    }
 
     template <typename T>
     ostream & operator << (ostream &out, List<T> &ls) {
@@ -117,7 +141,6 @@ namespace containers::list {
         elem >> ls;
         return in;
     }
-
 
 }
 
